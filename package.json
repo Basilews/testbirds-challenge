@@ -24,7 +24,6 @@
   },
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
-    "build": "webpack"
   },
   "repository": {
     "type": "git",
