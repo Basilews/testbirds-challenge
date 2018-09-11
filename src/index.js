@@ -53,20 +53,21 @@ class App extends Component {
     const { query, persons, isExpanded } = this.state;
 
     return (
-      <div className="personList">
-        <h3 className="title">My team for this test</h3>
-        <div className="persons">
-          <select
-            className="selectBox"
-            onChange={event => this.handleChange(event.target)}>
-            <option value=''>Add team member</option>
-            {persons.map(person =>
-              <option key={person.id} value={person.id}>{person.username}</option>
-            )}
-          </select>
-          {query.length > 0 && (
-            <ul className={classNames('personsBlock', isExpanded && 'isExpanded')}>
-              {query.map(person => (
+      <div className="content">
+        <div className="personList">
+          <h3 className="title">My team for this test</h3>
+            <ul className={classNames('persons', { isExpanded })}>
+              <li className="select">
+                <select
+                  className="selectBox"
+                  onChange={event => this.handleChange(event.target)}>
+                  <option value=''>Add team member</option>
+                  {persons.map(person =>
+                    <option key={person.id} value={person.id}>{person.username}</option>
+                  )}
+                </select>
+              </li>
+              {query.length > 0 && query.map(person => (
                 <li
                   key={`person-${person.id}`}
                   className="person">
@@ -86,7 +87,6 @@ class App extends Component {
                 </li>
               ))}
             </ul>
-          )}
           {query.length > 5 && !isExpanded && (
             <div className="showAll" onClick={() => this.expandList()}>
               <span>Show all</span>
