@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import classNames from 'classnames';
+
 
 import persons from '../assets/data.json'
 import 'normalize.css';
@@ -13,6 +15,7 @@ class App extends Component {
     this.state = {
       persons,
       query: [],
+      isExpanded: false,
     }
   }
 
@@ -42,15 +45,18 @@ class App extends Component {
     });
   }
 
+  expandList() {
+    this.setState({ isExpanded: true });
+  }
+
   render() {
-    const { query, persons } = this.state;
+    const { query, persons, isExpanded } = this.state;
 
     return (
       <div className="personList">
         <h3 className="title">My team for this test</h3>
         <div className="persons">
           <select
-            value=""
             className="selectBox"
             onChange={event => this.handleChange(event.target)}>
             <option value=''>Add team member</option>
@@ -58,8 +64,8 @@ class App extends Component {
               <option key={person.id} value={person.id}>{person.username}</option>
             )}
           </select>
-          {query && query.length > 0 && (
-            <ul>
+          {query.length > 0 && (
+            <ul className={classNames('personsBlock', isExpanded && 'isExpanded')}>
               {query.map(person => (
                 <li
                   key={`person-${person.id}`}
@@ -80,6 +86,12 @@ class App extends Component {
                 </li>
               ))}
             </ul>
+          )}
+          {query.length > 5 && !isExpanded && (
+            <div className="showAll" onClick={() => this.expandList()}>
+              <span>Show all</span>
+              <i className="arrow" />
+            </div>
           )}
         </div>
       </div>
